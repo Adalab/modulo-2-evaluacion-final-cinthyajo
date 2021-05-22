@@ -1,0 +1,39 @@
+.title {
+  color: black;
+  font-size: 30px;
+}
+
+.fav-title {
+  font-size: 20px;
+}
+
+.form {
+  color: black;
+  font-size: 30px;
+}
+
+.input {
+  padding: 5px;
+  border: solid 1px black;
+}
+.btn {
+  padding: 5px;
+  margin: 20px;
+  color: black;
+  font-weight: bold;
+  background-color: rgb(236, 245, 249);
+  border: solid 1spx black;
+}
+
+.list {
+  padding: 0;
+  margin: 0;
+  background-color: rgb(236, 245, 249);
+  list-style-type: none;
+}
+
+.section {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+}
