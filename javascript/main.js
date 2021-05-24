@@ -37,7 +37,7 @@ function paintSeries() {
     } else {
       imageShow = imagePlaceholder;
     }
-    //lista de resultados derecham Problemas para click en evento entonces click en elemento
+    //lista de resultados derecha Problemas para click en evento entonces click en elemento
     listTvShow.appendChild(
       newHtmlListNodeWithOnClick(titleShow, imageShow, idShow)
     );
@@ -50,7 +50,15 @@ function handlerCardClick(title, img, id) {
 
   // busco el id en el array de favoritos >>> find me devuelve elem si no undefined
   // - Si está: lo saco
-  // - Si no está: lo coloco
+  // - Si no está: lo coloco.
+
+  const foundId = favourites.find((favourite) => {
+    if (favourite.id !== undefined) {
+      return true;
+    } else {
+      return false;
+    }
+  });
 
   const showSelected = { title: title, img: img, id: id };
   //findIndex o find luego decidir si hago push o no
@@ -81,7 +89,7 @@ function newHtmlListNode(titleShow, imageShow, idShow) {
       return false;
     }
   });
-  console.log(foundFav);
+
   if (foundFav !== undefined) {
     divItem.classList.add("favorite");
   }
@@ -127,8 +135,6 @@ const getFromLocalStorage = () => {
     favourites = JSON.parse(localStoragefavourites);
   }
 };
-
-//bonus: borrar favoritos: splice?
 
 button.addEventListener("click", handlerButtonClick);
 

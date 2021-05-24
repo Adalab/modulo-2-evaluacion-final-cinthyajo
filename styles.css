@@ -1,6 +1,8 @@
 .title {
+  display: flex;
+  justify-content: center;
   color: black;
-  font-size: 30px;
+  font-size: 25px;
 }
 
 .fav-title {
@@ -41,4 +43,9 @@
 }
 .div-left {
   background-color: rgb(248, 248, 230);
+}
+
+.favorite {
+  background-color: rgb(220, 193, 211);
+  color: rgb(13, 13, 240);
 }
