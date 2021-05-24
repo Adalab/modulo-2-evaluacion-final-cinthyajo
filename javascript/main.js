@@ -7,6 +7,7 @@ const favouriteList = document.querySelector(".js-favourite");
 const imagePlaceholder =
   "https://via.placeholder.com/210x295/ffffff/666666/?text=TV";
 let favourites = [];
+let series = [];
 
 //lista búsqueda derecha
 function handlerButtonClick(event) {
@@ -20,27 +21,41 @@ function handlerButtonClick(event) {
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      for (let index = 0; index < data.length; index++) {
-        let titleShow = data[index].show.name;
-        let imageShow = null;
-        if (data[index].show.image != null) {
-          imageShow = data[index].show.image.medium;
-        } else {
-          imageShow = imagePlaceholder;
-        }
-        //lista de resultados derecham Problemas para click en evento entonces click en elemento
-        listTvShow.appendChild(
-          newHtmlListNodeWithOnClick(titleShow, imageShow)
-        );
-      }
+      series = data;
+      paintSeries();
     });
 }
 
+function paintSeries() {
+  listTvShow.innerHTML = "";
+  for (let index = 0; index < series.length; index++) {
+    let titleShow = series[index].show.name;
+    let idShow = series[index].show.id;
+    let imageShow = null;
+    if (series[index].show.image != null) {
+      imageShow = series[index].show.image.medium;
+    } else {
+      imageShow = imagePlaceholder;
+    }
+    //lista de resultados derecham Problemas para click en evento entonces click en elemento
+    listTvShow.appendChild(
+      newHtmlListNodeWithOnClick(titleShow, imageShow, idShow)
+    );
+  }
+}
+
 //función para mi local storage - tienda de camisetas
-function handlerCardClick(title, img) {
-  const showSelected = { title: title, img: img };
+function handlerCardClick(title, img, id) {
+  console.log(id);
+
+  // busco el id en el array de favoritos >>> find me devuelve elem si no undefined
+  // - Si está: lo saco
+  // - Si no está: lo coloco
+
+  const showSelected = { title: title, img: img, id: id };
   //findIndex o find luego decidir si hago push o no
   favourites.push(showSelected);
+  paintSeries();
   //local storage- ejecuto la función
   setInLocalStorage();
   buildFavouritesList();
@@ -56,8 +71,20 @@ function buildFavouritesList() {
 }
 
 //Dom avanzado - proceso de crear el <li>
-function newHtmlListNode(titleShow, imageShow) {
+function newHtmlListNode(titleShow, imageShow, idShow) {
   const divItem = document.createElement("div");
+
+  const foundFav = favourites.find((favourite) => {
+    if (favourite.id === idShow) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+  console.log(foundFav);
+  if (foundFav !== undefined) {
+    divItem.classList.add("favorite");
+  }
 
   const imageItem = document.createElement("img");
   imageItem.src = imageShow;
@@ -77,10 +104,10 @@ function newHtmlListNode(titleShow, imageShow) {
   return liItem;
 }
 
-function newHtmlListNodeWithOnClick(titleShow, imageShow) {
-  let liItem = newHtmlListNode(titleShow, imageShow);
+function newHtmlListNodeWithOnClick(titleShow, imageShow, idShow) {
+  let liItem = newHtmlListNode(titleShow, imageShow, idShow);
   liItem.onclick = function () {
-    handlerCardClick(titleShow, imageShow);
+    handlerCardClick(titleShow, imageShow, idShow);
   };
   return liItem;
 }
