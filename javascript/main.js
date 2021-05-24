@@ -8,6 +8,7 @@ const imagePlaceholder =
   "https://via.placeholder.com/210x295/ffffff/666666/?text=TV";
 let favourites = [];
 
+//lista búsqueda derecha
 function handlerButtonClick(event) {
   listTvShow.innerHTML = null;
 
@@ -27,6 +28,7 @@ function handlerButtonClick(event) {
         } else {
           imageShow = imagePlaceholder;
         }
+        //lista de resultados derecham Problemas para click en evento entonces click en elemento
         listTvShow.appendChild(
           newHtmlListNodeWithOnClick(titleShow, imageShow)
         );
@@ -34,20 +36,26 @@ function handlerButtonClick(event) {
     });
 }
 
+//función para mi local storage - tienda de camisetas
 function handlerCardClick(title, img) {
   const showSelected = { title: title, img: img };
+  //findIndex o find luego decidir si hago push o no
   favourites.push(showSelected);
+  //local storage- ejecuto la función
   setInLocalStorage();
-  buildFavouritesLilst();
+  buildFavouritesList();
 }
 
-function buildFavouritesLilst() {
+//lista favoritos izquierda
+function buildFavouritesList() {
   favouriteList.innerHTML = null;
+  //recorro mi array con mis favoritos
   for (const favourite of favourites) {
     favouriteList.appendChild(newHtmlListNode(favourite.title, favourite.img));
   }
 }
 
+//Dom avanzado - proceso de crear el <li>
 function newHtmlListNode(titleShow, imageShow) {
   const divItem = document.createElement("div");
 
@@ -77,4 +85,25 @@ function newHtmlListNodeWithOnClick(titleShow, imageShow) {
   return liItem;
 }
 
+//crear const local storage
+const setInLocalStorage = () => {
+  const stringifyfavourites = JSON.stringify(favourites);
+  //setItem guardar datos de mi lista favoritos - tienda de camisetas
+  localStorage.setItem("favourite", stringifyfavourites);
+};
+
+const getFromLocalStorage = () => {
+  //getItem recuperar datos - tienda de camisetas
+  const localStoragefavourites = localStorage.getItem("favourite");
+  //diferente !==
+  if (localStoragefavourites !== null) {
+    favourites = JSON.parse(localStoragefavourites);
+  }
+};
+
+//bonus: borrar favoritos: splice?
+
 button.addEventListener("click", handlerButtonClick);
+
+getFromLocalStorage();
+buildFavouritesList();
