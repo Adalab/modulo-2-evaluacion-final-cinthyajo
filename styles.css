@@ -39,13 +39,13 @@
 }
 
 .div-right {
-  background-color: rgb(236, 245, 249);
+  background-color: white;
 }
 .div-left {
   background-color: rgb(248, 248, 230);
 }
 
 .favorite {
-  background-color: rgb(220, 193, 211);
+  background-color: rgb(246, 232, 241);
   color: rgb(13, 13, 240);
 }
